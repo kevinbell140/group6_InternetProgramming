@@ -9,11 +9,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"</script>
-    <script>
-    $(document).ready(function()){
-        $("#newReview").validate();
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+
 
     <style>
         body{background-color: darkblue}
@@ -24,6 +21,7 @@
 </head>
 <body>
 <?php
+    //security and post get info
     session_start();
     $toUpdate = $_GET['post'];
     $conn3 = new mysqli("localhost", "group6", "fall2017188953", "group6");
@@ -41,9 +39,12 @@
     $isAdmin = $_SESSION['isAdmin'];
 
     if($username == "" || $username != $user ){
-        header("Location: ../index.php");
+        if($isAdmin != 1){
+            header("Location: ../index.php");
+        }
     }
 ?>
+<!--navbar-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="../index">Hungry Campus</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -98,6 +99,7 @@
 </nav>
 <br>
 <?php
+//edit form
     echo "<div class='container'>";
     echo "<div class='row'>";
         echo "<div class='col-md-12'>";
@@ -167,6 +169,8 @@
 
 
                     echo "<button class='btn btn-primary' type='submit'>Submit</button>";
+
+                    //redirect
                     switch($eateryReq){
                         case 1:
                             echo '<a class="btn btn-danger" href="../locations/cafeteria.php" role="button">Cancel</a>';

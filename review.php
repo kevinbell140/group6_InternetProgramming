@@ -9,12 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"</script>
-    <script>
-        $(document).ready(function()){
-            $("#newReview").validate();
-    </script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
     <style>
         body{background-color: darkblue}
         .img {float: right; height: 20% ; width: 20%}
@@ -24,6 +19,7 @@
 </head>
 <body>
 <?php
+//gets login info
 session_start();
 $username = $_SESSION['username'];
 $isAdmin = $_SESSION['isAdmin'];
@@ -32,6 +28,8 @@ if($username == ""){
     header("Location: ../index.php");
 }
 ?>
+
+<!-- navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="../index">Hungry Campus</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,6 +93,7 @@ if($username == ""){
                         <label name="eatery">Eatery</label>
                         <select id="eatery" name="eatery" class="form-control"> '
                             <?php
+                            //dropdown for location selection
                             $conn = new mysqli("localhost", "group6", "fall2017188953", "group6");
 
                             if($conn->connect_error){
@@ -114,6 +113,7 @@ if($username == ""){
                             ?>
                         </select>
                     </div>
+                    <!-- review form -->
                     <div class="form-group">
                         <label name="title">Title:</label>
                         <input name="title" id="title" class="form-control" required>
@@ -134,6 +134,7 @@ if($username == ""){
                     </div>
                     <button class="btn btn-primary" type="submit">Submit</button>
                     <?php
+                    //redirect to proper page
                         switch($_GET['eateryID']){
                             case 1:
                                 echo '<a class="btn btn-danger" href="../locations/cafeteria.php" role="button">Cancel</a>';

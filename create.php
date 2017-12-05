@@ -1,5 +1,5 @@
 <?php
-
+//get login
 session_start();
 $username = $_SESSION['username'];
 $isAdmin = $_SESSION['isAdmin'];
@@ -9,15 +9,12 @@ if($username == ""){
     header("Location: ../loginPage.php");
 }
 
-function valid($str) {
-    return preg_match('/^[A-Za-z0-9_~\-!@#\$%\^&*\(\)]+$/',$str);
-
-}
-
 $eateryID = $_POST['eatery'];
 $title = $_POST['title'];
+//script injection defense
 $title = preg_replace('#<(.*?)>(.*?)</(.*?)>#is', '', $title);
 $review = $_POST['review'];
+//script injection defense
 $review = preg_replace('#<(.*?)>(.*?)</(.*?)>#is', '', $review);
 $rating = $_POST['rating'];
 $date = date("y.m.d h:i:S a");
@@ -27,7 +24,7 @@ $conn = new mysqli("localhost", "group6", "fall2017188953", "group6");
 if($conn->connect_error){
     die("Connection failed: " . $conn->connect_error);
 }
-
+//sql injection defense
 $query = $conn->prepare("INSERT INTO Post (title, review, rating, userID, eateryID, time) Values (?, ?, ?, ?, ?, ?)");
 
 $query->bind_param("sssiis", $title, $review, $rating, $userID, $eateryID, $date);
@@ -40,6 +37,7 @@ if($query->execute() === TRUE){
 $query->close();
 $conn->close();
 
+//redirect
 switch($eateryID){
     case 1:
         header("Location: ../locations/cafeteria.php");
