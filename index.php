@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <style>
         body{background-color: darkblue}
+        .reviews{background-color: lightgray; padding: 10px; border: 2px solid white}
         .img {float: right; height: 20% ; width: 20%}
 
     </style>
@@ -19,7 +20,6 @@
 <?php
 //security
 session_start();
-$userID = $_SESSION['userID'];
 $username = $_SESSION['username'];
 $isAdmin = $_SESSION['isAdmin'];
 ?>
@@ -43,12 +43,12 @@ $isAdmin = $_SESSION['isAdmin'];
                     Locations
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="../locations/cafeteria.php">Cafeteria</a>
-                    <a class="dropdown-item" href="../locations/ChickFilA.php">Chick Fil A</a>
-                    <a class="dropdown-item" href="../locations/starbucks.php">Starbucks</a>
-                    <a class="dropdown-item" href="../locations/papajohns.php">Papa Johns</a>
-                    <a class="dropdown-item" href="../locations/einsteinbagels.php">Einstein Bagels </a>
-                    <a class="dropdown-item" href="../locations/pitapit.php">Pita Pit</a>
+                    <a class="dropdown-item" href="cafeteria.php">Cafeteria</a>
+                    <a class="dropdown-item" href="ChickFilA.php">Chick Fil A</a>
+                    <a class="dropdown-item" href="starbucks.php">Starbucks</a>
+                    <a class="dropdown-item" href="papajohns.php">Papa Johns</a>
+                    <a class="dropdown-item" href="einsteinbagels.php">Einstein Bagels </a>
+                    <a class="dropdown-item" href="pitapit.php">Pita Pit</a>
                 </div>
             </li>
         </ul>
@@ -81,51 +81,14 @@ $isAdmin = $_SESSION['isAdmin'];
     <div class="row">
         <div class="col-md-12">
             <div class="jumbotron">
-                <h2 class="display-3">All posts<span><img class="img" src="../Images/UNF_Ospreys_logo.png" alt="UNF logo"></span></h2>
+                <h2 class="display-3">Locations<span><img class="img" src="../Images/UNF_Ospreys_logo.png" alt="UNF logo"></span></h2>
                 <hr>
-                <p>This is an overview of all thse posts on the site</p>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="jumbotron">
-                <?php
-                //get all posts
-                $conn2 = new mysqli("localhost", "group6", "fall2017188953", "group6");
-
-                if($conn2->connect_error){
-                    die("Connection failed : " . $conn2->connect_error);
-                }
-
-                $query2 = $conn2->prepare("SELECT Post.postID, Post.title, Post.review, Post.rating, User.userName, Eatery.eateryName, Post.time, Post.userID, Post.helpful FROM Post INNER JOIN Eatery ON Post.eateryID = Eatery.eateryID INNER JOIN User ON Post.userID = User.userID ORDER BY Post.time DESC");
-
-                $query2->execute();
-                $query2->bind_result($postID, $title, $review, $rating, $user, $eateryName, $date, $postUser, $helpful);
-
-                while($query2->fetch()){
-                    echo "
-                <div>
-                    <h3>$eateryName</h3>
-                    <h3>$title</h3>
-                        <p>$review</p>
-                        <p>Overall rating: $rating / 5</p>
-                        <p>Posted by: $user on $date</p>
-                        <p><i>$helpful users found this post helpful</i></p>
-                        <input type='hidden' name='postID' value='$postID'>
-                        " ;
-                    if ($username != ""){
-                        echo "<a class='btn btn-success' href='../posts/helpful.php?post=$postID' role='button'>I found this post helpful</a>";
-                    }
-                    echo "<br>";
-                    if ($userID == $postUser || $isAdmin == 1){
-                        echo "<a class='btn btn-primary' href='edit.php?post=$postID' role='button'>Edit Post</a>";
-                        echo "<br>";
-                        echo "<a class='btn btn-danger' href='delete.php?post=$postID' role='button'>Delete Post</a>";
-                    }
-                    echo "</div><hr>";
-                }
-                ?>
+                <p><a href="cafeteria.php">Osprey Cafe</a></p>
+                <p><a href="ChickFilA.php">Chick-Fila</a></p>
+                <p><a href="starbucks.php">Starbucks</a></p>
+                <p><a href="einsteinbagels.php">Einstein Bagles</a></p>
+                <p><a href="papajohns.php">Papa Johns</a></p>
+                <p><a href="pitapit.php">Pita Pit</a></p>
             </div>
         </div>
     </div>
