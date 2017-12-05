@@ -1,4 +1,5 @@
 <?php
+//security
 session_start();
 
 $username = $_POST["username"];
@@ -16,6 +17,7 @@ $query->bind_param('s', $username);
 $query->execute();
 $query->bind_result($userID, $userpass, $isAdmin);
 
+//sets login session
 if ($query->fetch() != null){
     if ($userpass === $password){
         $_SESSION['userID'] = $userID;

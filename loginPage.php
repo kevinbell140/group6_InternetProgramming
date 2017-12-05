@@ -15,10 +15,12 @@
 </head>
 <body>
 <?php
+    //security
     session_start();
     $username = $_SESSION['username'];
     $isAdmin = $_SESSION['isAdmin'];
 ?>
+<!-- navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="index.php">Hungry Campus</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,17 +74,18 @@
     </div>
 </nav>
 <br>
+<!-- login form -->
 <div class="container">
     <div class="row">
         <div class="col-md-8">
             <div class="jumbotron">
             <form name="login" action="login.php" method="post">
                 <div class="form-group">
-                    <label name="userName">Username:</label>
+                    <label>Username:</label>
                     <input name="username" id="username" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label name="password">Password:</label>
+                    <label>Password:</label>
                     <input type="password" name="password" id="password" class="form-control" required>
                 </div>
                 <div class="form-group">
